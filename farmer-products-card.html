@@ -1,0 +1,100 @@
+<html>
+  <head>
+    <title>farmer dashboard products</title>
+<style>
+   .farmer-product-card {
+  width: 320px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.product-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.product-details {
+  padding: 14px;
+  font-size: 14px;
+}
+
+.product-details p {
+  margin: 6px 0;
+}
+
+.auction-status {
+  margin-top: 10px;
+  padding: 6px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.auction-status.live {
+  background: #e6f7ee;
+  color: #2f6f54;
+}
+
+.auction-status.closed {
+  background: #fdecea;
+  color: #c0392b;
+}
+
+.farmer-actions {
+  display: flex;
+  gap: 10px;
+  padding: 14px;
+}
+
+.btn {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn.view {
+  background: #2f6f54;
+  color: #fff;
+}
+
+.btn.delete {
+  background: #ffe5e5;
+  color: #c0392b;
+  font-weight: 600;
+}
+
+</style>
+  </head>
+  <body>
+    <div class="farmer-product-card">
+
+  <!-- Product Image -->
+  <img src="assets/images/tomato.jpg" alt="Product Image" class="product-img">
+
+  <!-- Product Details -->
+  <div class="product-details">
+    <p>🌱 <strong>Crop:</strong> Tomato</p>
+    <p>📦 <strong>Quantity:</strong> 50 Quintals</p>
+    <p>💰 <strong>Base Price:</strong> ₹2200 / Quintal</p>
+    <p>⭐ <strong>Quality:</strong> Grade A</p>
+   
+  </div>
+
+  <!-- Farmer Actions -->
+  <div class="farmer-actions">
+ <button class="btn view" onclick="window.location.href='farmer-dashboard.html#bid'">View Bids</button>
+    <button class="btn delete">Delete Product</button>
+  </div>
+
+</div>
+
+  </body>
+</html>
+
+
