@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Live Auction</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    margin: 0;
+    padding: 0;
+}
+
+/* CARD */
+.auction-card {
+    max-width: 1150px;
+    margin: 25px auto;
+    background: #fff;
+    padding: 18px 22px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    position: relative;
+}
+
+/* TITLE */
+.auction-title {
+    text-align: center;
+    margin-bottom: 10px;
+  
+}
+
+/* HR */
+.auction-divider {
+    border: none;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #28a745, transparent);
+    margin: 10px 0 18px 0;
+}
+
+/* TIMER */
+.timer {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-weight: bold;
+    font-size: 15px;
+    background: #e9f7ef;
+    color: #1e7e34;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 2px solid #28a745;
+    box-shadow: 0 0 10px rgba(40,167,69,0.5);
+}
+
+.timer-warning {
+    background: #f8d7da;
+    color: #721c24;
+    border-color: #dc3545;
+    box-shadow: 0 0 15px rgba(220,53,69,0.8);
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.07); }
+    100% { transform: scale(1); }
+}
+
+/* WINNER */
+.winner-banner {
+    display: none;
+    background: #d4edda;
+    color: #155724;
+    padding: 12px;
+    text-align: center;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* MAIN LAYOUT */
+.layout {
+    display: flex;
+    gap: 18px;
+}
+
+/* LEFT */
+.left-column {
+    flex: 1;
+}
+
+/* PRODUCT */
+.product img {
+    width: 90%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 8px;
+}
+
+.product-details p {
+    margin: 8px 0;
+    font-size: 14px;
+}
+
+/* AUCTION INFO */
+.auction-info {
+    margin-top: 18px;
+    padding: 12px;
+    border: 1px dashed #ccc;
+    border-radius: 8px;
+    text-align: center;
+    width:85%;
+}
+
+.label {
+    font-size: 13px;
+    color: #666;
+}
+
+.current-bid {
+    font-size: 38px;
+    color: #28a745;
+    font-weight: bold;
+    margin: 6px 0;
+}
+
+input, button {
+    width: 80%;
+    padding: 8px;
+    margin-top: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+button {
+    background: #28a745;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+button:disabled {
+    background: gray;
+    cursor: not-allowed;
+}
+
+/* RIGHT */
+.bids {
+    flex: 1.3;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 6px;
+    text-align: center;
+}
+
+th {
+    background: #f8f9fa;
+    position: sticky;
+    top: 0;
+}
+
+/* YELLOW HIGHLIGHT */
+#bidTable tr {
+    background-color: #fff9db;
+}
+#bidTable tr:hover {
+    background-color: #fff3b0;
+}
+#bidTable tr:first-child {
+    background-color: #ffe066;
+    font-weight: bold;
+}
+
+tbody {
+    display: block;
+    max-height: 260px;
+    overflow-y: auto;
+}
+
+thead, tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+</style>
+</head>
+
+<body>
+
+<div class="auction-card">
+
+  <div class="timer">
+    ⏱ Time Left: <span id="time">00:00</span>
+  </div>
+
+  <h1 class="auction-title">🔴 Live Auction</h1>
+  <hr class="auction-divider"><br>
+
+  <div class="layout">
+
+    <div class="left-column">
+
+      <div class="product">
+        <img src="" id="productimg" alt="Product">
+        <div class="product-details">
+          <p><strong>Product:</strong> <span id="crop"></span></p>
+          <p><strong>Quantity:</strong> <span id="qty"></span></p>
+          <p><strong>Farmer:</strong> <span id="fname"></span></p>
+          <p><strong>Base Price:</strong> ₹<span id="price"></span></p>
+        </div>
+      </div>
+
+      <div class="auction-info">
+        <p class="label">Current Highest Bid</p>
+        <div class="current-bid">₹<span id="highestBid">0</span></div>
+
+        <input type="text" id="buyername" placeholder="Buyer Name">
+        <input type="text" id="buyerContact" placeholder="Contact No">
+        <input type="number" id="bidAmount" placeholder="Enter Bid">
+        <button id="bidBtn">Place Bid</button>
+      </div>
+
+    </div>
+
+    <div class="bids">
+      <h3>All Bids</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Buyer Name</th>
+           
+            <th>Contact</th>
+            <th>Bid (₹)</th>
+            <th>Date & Time</th>
+          </tr>
+        </thead>
+        <tbody id="bidTable"></tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- 🔥 MAIN SCRIPT -->
+<script type="module">
+import { db } from "./firebase.js";
+import { ref, get, push, set, onValue }
+from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+
+/* ===============================
+   GLOBAL VARIABLES
+================================ */
+let auctionEnded = false;
+let basePrice = 0;
+
+// 🔐 Load saved buyer info
+const savedBuyer = JSON.parse(localStorage.getItem("buyerInfo"));
+
+if (savedBuyer) {
+  document.getElementById("buyername").value = savedBuyer.name;
+  document.getElementById("buyerContact").value = savedBuyer.contact;
+
+  document.getElementById("buyername").disabled = true;
+  document.getElementById("buyerContact").disabled = true;
+}
+
+/* ===============================
+   GET PRODUCT ID (ONLY ONCE)
+================================ */
+const params = new URLSearchParams(window.location.search);
+const productId = params.get("productId");
+
+if (!productId) {
+  alert("Product ID missing in URL");
+  throw new Error("No productId");
+}
+
+/* ===============================
+   LOAD PRODUCT DETAILS
+================================ */
+const productRef = ref(db, "products/" + productId);
+
+get(productRef).then((snap) => {
+  if (!snap.exists()) {
+    alert("Product not found");
+    return;
+  }
+
+  const product = snap.val();
+  document.getElementById("productimg").src =
+  product.productImage || "https://via.placeholder.com/300";
+  document.getElementById("crop").innerText = product.crop;
+  document.getElementById("qty").innerText = product.quantity;
+  document.getElementById("fname").innerText = product.farmerName || "Farmer";
+
+  basePrice = Number(product.price);
+  document.getElementById("price").innerText = basePrice;
+
+  if (product.auctionEnd) {
+    startTimer(product.auctionEnd);
+  }
+});
+
+/* ===============================
+   PLACE BID (MULTIPLE TIMES)
+================================ */
+document.getElementById("bidBtn").addEventListener("click", async () => {
+
+  if (auctionEnded) {
+    alert("Auction ended");
+    return;
+  }
+
+  const buyerName = document.getElementById("buyername").value.trim();
+  const buyerContact = document.getElementById("buyerContact").value.trim();
+  const bidAmount = Number(document.getElementById("bidAmount").value);
+
+  if (!buyerName || !buyerContact || !bidAmount) {
+    alert("Fill all fields");
+    return;
+  }
+
+  // 💾 Save buyer info only first time
+if (!savedBuyer) {
+  localStorage.setItem(
+    "buyerInfo",
+    JSON.stringify({
+      name: buyerName,
+      contact: buyerContact
+    })
+  );
+
+  document.getElementById("buyername").disabled = true;
+  document.getElementById("buyerContact").disabled = true;
+}
+  if (bidAmount < basePrice) {
+    alert("Bid must be ≥ Base Price ₹" + basePrice);
+    return;
+  }
+
+  const currentHighest =
+    Number(document.getElementById("highestBid").innerText);
+
+  if (currentHighest > 0 && bidAmount <= currentHighest) {
+    alert("Bid must be higher than ₹" + currentHighest);
+    return;
+  }
+
+  const bidsRef = ref(db, "bids/" + productId);
+  const newBidRef = push(bidsRef);
+
+  await set(newBidRef, {
+    buyerName: buyerName,
+   buyerId: newBidRef.key,
+    contact: buyerContact,
+    amount: bidAmount,
+    dateTime: new Date().toLocaleString()
+  });
+
+  document.getElementById("bidAmount").value = "";
+});
+
+/* ===============================
+   SHOW ALL BIDS (LIVE)
+================================ */
+const bidsRef = ref(db, "bids/" + productId);
+
+onValue(bidsRef, (snap) => {
+
+  const bidTable = document.getElementById("bidTable");
+  const highestBidSpan = document.getElementById("highestBid");
+
+  bidTable.innerHTML = "";
+  let bids = [];
+
+  if (!snap.exists()) {
+    highestBidSpan.innerText = "0";
+    return;
+  }
+
+  snap.forEach(child => {
+    bids.push(child.val());
+  });
+
+  bids.sort((a, b) => b.amount - a.amount);
+
+  highestBidSpan.innerText = bids[0].amount;
+
+  bids.forEach(b => {
+    bidTable.innerHTML += `
+      <tr>
+        <td>${b.buyerName}</td>
+       
+        <td>${b.contact}</td>
+        <td>₹${b.amount}</td>
+        <td>${b.dateTime}</td>
+      </tr>
+    `;
+  });
+});
+
+/* ===============================
+   AUCTION TIMER
+================================ */
+function startTimer(endTime) {
+
+  const end = new Date(endTime).getTime();
+  const timeBox = document.getElementById("time");
+  const bidBtn = document.getElementById("bidBtn");
+
+  const timer = setInterval(() => {
+
+    const diff = end - Date.now();
+
+    if (diff <= 0) {
+      clearInterval(timer);
+      timeBox.innerText = "00:00";
+      bidBtn.disabled = true;
+      auctionEnded = true;
+      alert("Auction Ended");
+      return;
+    }
+
+    const m = Math.floor(diff / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+
+    timeBox.innerText =
+      `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+
+  }, 1000);
+}
+</script>
+
+</body>
+</html>

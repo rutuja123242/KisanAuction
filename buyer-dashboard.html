@@ -1,0 +1,412 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="css/style.css"/>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+<link rel="stylesheet" type="text/css" href="css/bootstrap-grid.css"/>
+<link rel="stylesheet" type="text/css" href="css/bootstrap-reboot.css"/>
+<link rel="stylesheet" type="text/css" href="css/bootstrap-utilities.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<script type="text/javascript" src="js/bootstrap.bundle.js"></script>
+<title>Buyer Dashboard</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #f9fbe7;
+  font-size: 16px;
+}
+
+
+/* LAYOUT */
+.main {
+  display: flex;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 220px;
+  background: #2a634b;
+  min-height: 100vh;
+}
+
+.sidebar button {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  background: none;
+  color: white;
+  text-align: left;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.sidebar button:hover {
+  background: #4caf50;
+}
+
+
+/* CONTENT */
+.content {
+  flex: 1;
+  padding: 25px;
+}
+
+/* SECTIONS */
+.sec { display: none; }
+.sec.active { display: block; }
+
+h3 {
+  font-size: 22px;
+}
+
+/* DASHBOARD CARDS */
+
+.card {
+  background: white;
+  padding: 25px;
+  width: 220px;
+  text-align: center;
+  border-radius: 8px;
+  font-size: 18px;
+}
+
+/* FORM */
+.form-box {
+  max-width: 500px;
+}
+
+label {
+  font-weight: bold;
+  margin-top: 10px;
+  display: block;
+   margin-left:15px;
+}
+
+input{
+  width: 100%;
+  padding: 12px;
+  margin: 6px 0 12px;
+  font-size: 16px;
+  margin-left:15px;
+}
+
+
+.note {
+  color: red;
+}
+
+/* BUTTON */
+.btn {
+  background: #2e7d32;
+  color: white;
+  border: none;
+  padding: 12px;
+  cursor: pointer;
+  font-size: 16px;
+ margin:15px;
+}
+
+.btn:hover {
+  background: #4caf50;
+}
+
+/* TABLE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+}
+
+th, td {
+  padding: 12px;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+}
+
+.product-card {
+  width: 320px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  overflow: hidden;
+  margin:30px;
+  flex-direction: column;
+}
+
+/* Farmer Header */
+.farmer-header {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+}
+
+.farmer-img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover;
+}
+
+.farmer-header h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #2f6f54;
+}
+
+.farmer-header p {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: #777;
+}
+
+/* Product Image */
+.product-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Details */
+.product-details {
+  padding: 12px;
+  font-size: 14px;
+}
+
+.product-details p {
+  margin: 6px 0;
+}
+
+/* Buttons */
+.action-buttons {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.btn {
+  border: none;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.auction {
+  background: #2f6f54;
+  color: white;
+}
+
+.location {
+  background: #e8f5ee;
+  color: #2f6f54;
+  border: 1px solid #2f6f54;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+/*.card-container
+{
+  height:700px;
+  display:grid;
+  grid-template-columns: repeat(3,1fr);
+  gap:20px;
+  margin-left:50px;
+  
+}*/
+ 
+/* FIX PRODUCT LAYOUT */
+#productsDiv {
+  height:30%;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 20px;
+  margin-left:50px;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<div class="Header">
+    <img src="assets/images/logo.png" class="Logo"/>
+
+     
+
+                <div class="signmenu-container">
+                   <a href="index.html" class="sign_menus" style="margin-right:18px;">Home</a>
+                <a href= "farmer-login.html" class="sign_menus" style="margin-right:18px;">Farmer</a>
+                <a href="buyer-login.html" class="sign_menus" style="margin-right:18px;">Buyer</a>
+               
+                
+               
+          </div>
+    <input type="search" placeholder="Search..." class="search-input" />
+            <i class="bi bi-search" style="position:absolute;top:47px;left:48%;color:gray;"></i>
+            
+          
+    
+</div>
+
+<div class="main">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <br>
+  <h3 class="sign_menus" style="margin: 6px;">&nbsp;Buyer Dashboard</h3><br>
+  <button onclick="show('pro')">Profile</button>
+  <button onclick="show('product')">Products</button>
+   <button onclick="show('bid')">My Bid History</button>
+  
+</div>
+
+
+<!-- PROFILE -->
+<div id="pro" class="sec" >
+  <h3>Profile</h3>
+
+
+
+  <label>Buyer Name</label>
+  <input id="bname" placeholder="Enter farmer name">
+
+
+  <label>Address</label>
+  <input id="add" placeholder="Enter state">
+
+  <label>Contact Number</label>
+  <input id="phone" placeholder="">
+
+  <label>Email</label>
+  <input id="email" placeholder="example@gmail.com">
+
+
+  <div class="btn-box">
+  <button class="btn profile-btn" onclick="saveProfile()">Save</button>
+  <button class="btn profile-btn" onclick="updateProfile()">Update</button>
+</div>
+</div>
+
+
+
+<!-- PRODUCTS -->
+<!-- PRODUCTS -->
+<div id="product" class="sec active">
+
+  <!-- Firebase products will load here -->
+  <div class="card-container">
+    <div id="productsDiv" class="products-grid"></div>
+  </div>
+
+</div>
+
+
+
+<!-- BIDDING -->
+<div id="bid" class="sec">
+  <h3>Bidding History</h3>
+  <table>
+    <tr>
+      <th>Sr.No.</th>
+      <th>Farmer<br>Name</th>
+      <th>Product<br>Name</th>
+      <th>Bid<br>Amount</th>
+      <th>Status</th>
+      <th>Date</th>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Ramesh Patil</td>
+      <td>Tomato</td>
+      <td>500000</td>
+      <td>Rejected</td>
+      <td>12/3/2025</td>
+      
+    </tr>
+  </table>
+</div>
+  
+</div>
+    <script>
+  
+  function show(id) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+  // Show Bid History by default on page load
+  window.onload = function () {
+    show('product');
+  };
+  
+</script>
+
+  <script type="module">
+  import { db } from './firebase.js';
+  import { ref, onValue, get } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+
+  
+  
+    const productsDiv = document.getElementById("productsDiv");
+
+onValue(ref(db, "products"), snapshot => {
+  productsDiv.innerHTML = "";
+
+  const products = snapshot.val() || {};
+  for (const prodId in products) {
+    const product = products[prodId];
+
+    // Use product's farmer info directly
+    const farmerName = product.farmerName || "Farmer";
+    const farmerAddr = product.farmerAddress || "";
+    const farmerImg = product.farmerImage || "assets/images/default-farmer.png";
+    const productImg = product.productImage || "assets/images/default-product.png";
+
+    productsDiv.innerHTML += `
+      <div class="product-card">
+
+        <div class="farmer-header">
+          <img src="${farmerImg}" class="farmer-img"/>
+          <div>
+            <h3>${farmerName}</h3>
+            <p>${farmerAddr}</p>
+          </div>
+        </div>
+
+        <img src="${productImg}" class="product-img"
+          onerror="this.src='assets/images/default-product.png'"/>
+
+        <div class="product-details">
+          <p><strong>🌾 Crop:</strong> ${product.crop}</p>
+          <p><strong>📦 Quantity:</strong> ${product.quantity}</p>
+          <p><strong>💰 Price:</strong> ₹${product.price}</p>
+          <p><strong>⭐ Quality:</strong> ${product.quality}</p>
+        </div>
+
+        <div class="action-buttons">
+          <button class="btn auction" data-id="${prodId}">View Auction</button>
+          <button class="btn location" onclick="window.location.href='map.html?productId=${prodId}'">View Location</button>
+        </div>
+      </div>
+    `;
+  }
+});
+
+  productsDiv.addEventListener("click", (e) => {
+  if (e.target.classList.contains("auction")) {
+    const prodId = e.target.getAttribute("data-id");
+    window.location.href = "LiveAuction.html?productId=" + prodId;
+  }
+});
+</script>
+
+
+</body>
+</html>
