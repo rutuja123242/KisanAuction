@@ -6,14 +6,14 @@ Small farmers often struggle to find reliable buyers and secure fair prices for 
 
 Features
 
-Map-based farm location visibility
-WhatsApp URL integration for bid acceptance notifications
-Live crop auction system
-Bid tracking and history
-Time-bound auctions
-Direct farmer–buyer interaction
-Transparent and fair price discovery
-Easy crop listing with images and details
+- Map-based farm location visibility
+- WhatsApp URL integration for bid acceptance notifications
+- Live crop auction system
+- Bid tracking and history
+- Time-bound auctions
+- Direct farmer–buyer interaction
+- Transparent and fair price discovery
+- Easy crop listing with images and details
 
 Tech Stack
 
