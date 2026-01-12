@@ -18,7 +18,6 @@ Features
 Tech Stack
 
 - Frontend :  HTML , CSS, Javascript
-- Backend : Firebase(Auth , Realtime DB , Hosting )
+- Backend : Firebase(Auth , Database , Hosting )
 
-Live URL :  https://kissan-auction-8425c.web.app
 
